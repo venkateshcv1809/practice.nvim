@@ -110,5 +110,6 @@ expect(looping:start() and looping:status().lesson == 'repeat-a', 'nvim loop sta
 looping.session.handle.state = { text = 'hello', metrics = { accuracy = 98, seconds = 5 } }
 expect(looping:next() and looping:status().lesson == 'repeat-a' and looping:status().attempt == 2,
     'nvim next walked the catalog instead of repeating')
+expect(require('practice.version') == '0.1.0', 'plugin version mismatch')
 expect(vim == nil, 'core requires Neovim')
 print('PASS: plain Lua core, data schemas, configurable packs, lazy adapters, generic checks, and lifecycle')

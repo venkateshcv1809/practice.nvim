@@ -22,6 +22,7 @@ local original_window = vim.api.nvim_get_current_win()
 local original_buffer = vim.api.nvim_get_current_buf()
 vim.api.nvim_buf_set_lines(original_buffer, 0, -1, false, { 'user content' })
 local baseline_buffers = #vim.api.nvim_list_bufs()
+expect(practice.version == '0.1.0', 'plugin version mismatch')
 practice.setup({ editing = { seed = 1 }, advance_ms = 60000 })
 for _, entry in ipairs(loader.list()) do
     if entry.tool == 'nvim' then

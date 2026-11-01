@@ -20,11 +20,14 @@ Neovim is the supported host; teaching Vim concepts does not require a parallel 
 
 ## Start practicing
 
+Current plugin version is **0.1.0**. Pin git tag `v0.1.0`, or follow `develop`
+for unreleased commits. See [versioning](docs/usage.md#versioning).
+
 Install with your plugin manager, or clone into
 `stdpath('data')/site/pack/plugins/start/nvim-practice`. lazy.nvim:
 
 ```lua
-{ 'venkateshcv1809/nvim-practice' }
+{ 'venkateshcv1809/nvim-practice', version = '0.1.0' }
 ```
 
 For a local checkout, add its absolute path to `init.lua`:
@@ -78,7 +81,7 @@ require('practice').setup({
 See the [usage guide](docs/usage.md) for all commands, generator options, custom
 lessons, Prosetta setup, and verification commands.
 The [installation guide](docs/usage.md#installation) includes lazy.nvim, native
-packages, and local checkouts.
+packages, local checkouts, and how to pin `0.1.0` or follow `develop`.
 
 ## Roadmap
 

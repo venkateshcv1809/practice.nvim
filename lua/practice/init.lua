@@ -1,5 +1,6 @@
 -- Neovim command facade. Session decisions belong to the host-independent engine.
 local M = {}
+M.version = require('practice.version')
 local loader = require('practice.lessons')
 local Engine = require('practice.core.engine')
 local engine

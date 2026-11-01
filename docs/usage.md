@@ -9,6 +9,12 @@ The plugin uses Lua directly: no build step or required external backend. The
 target requirement is Neovim 0.9+; this checkpoint was tested on 0.12.5.
 Older versions have not been verified in this environment. Vim is not a supported plugin host.
 
+### Versioning
+
+The plugin version is `0.1.0` (`require('practice').version`). Git tags are
+`v0.1.0`. Pin a tag for a freeze; follow `develop` for unreleased work.
+Content JSON uses a separate `schema_version` and is not the plugin release.
+
 ### lazy.nvim
 
 `main` and `cmd` are not required. lazy.nvim infers the Lua module `practice`
@@ -17,12 +23,19 @@ when the plugin is sourced. `cmd` would only defer loading until those
 commands run; omit it so the plugin loads at startup. Pass `opts` only when
 you need non-default `setup()` values.
 
+Pin the tagged release:
+
 ```lua
-{ 'venkateshcv1809/nvim-practice' }
+{ 'venkateshcv1809/nvim-practice', version = '0.1.0' }
 ```
 
-Track unreleased commits with `branch = 'develop'`. Restart Neovim and run
-`:Practice`. See [lazy.nvim's specification](https://lazy.folke.io/spec).
+Track unreleased commits:
+
+```lua
+{ 'venkateshcv1809/nvim-practice', branch = 'develop' }
+```
+
+Restart Neovim and run `:Practice`. See [lazy.nvim's specification](https://lazy.folke.io/spec).
 
 For a local checkout that is not on GitHub yet, use
 `dir = '/absolute/path/to/nvim-practice'` instead of the repo string.
@@ -33,7 +46,7 @@ For the default Linux data directory:
 
 ```sh
 mkdir -p ~/.local/share/nvim/site/pack/plugins/start
-git clone https://github.com/venkateshcv1809/nvim-practice.git \
+git clone --branch v0.1.0 https://github.com/venkateshcv1809/nvim-practice.git \
   ~/.local/share/nvim/site/pack/plugins/start/nvim-practice
 ```
 
