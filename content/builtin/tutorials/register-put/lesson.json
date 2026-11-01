@@ -1,0 +1,41 @@
+{
+  "instructions": [
+    "Yank the word into register a, then put it at the end.",
+    "Try \"ayiw then $ then \"ap."
+  ],
+  "id": "builtin.register-put",
+  "tool": "nvim",
+  "title": "Put from a named register",
+  "category": "register",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "seedseed"
+      ],
+      "message": "Text does not match the exercise target."
+    },
+    {
+      "path": [
+        "registers",
+        "a"
+      ],
+      "op": "equals",
+      "value": "seed",
+      "message": "Register a does not contain the expected text."
+    }
+  ],
+  "fixture": {
+    "generate": "register.put",
+    "lines": [
+      "seed"
+    ],
+    "cursor": [
+      1,
+      0
+    ]
+  }
+}

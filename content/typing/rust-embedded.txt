@@ -1,0 +1,35 @@
+#![no_std]
+#![no_main]
+
+use embedded_hal::digital::OutputPin;
+use panic_halt as _;
+
+#[embassy_executor::main]
+async fn main(_spawner: embassy_executor::Spawner) {
+    let mut led = unsafe { led0() };
+    loop {
+        let _ = led.set_high();
+        embassy_time::Timer::after_millis(200).await;
+        let _ = led.set_low();
+        embassy_time::Timer::after_millis(800).await;
+    }
+}
+
+pub fn crc8(data: &[u8]) -> u8 {
+    data.iter().fold(0u8, |crc, &b| crc ^ b)
+}
+
+pub fn read_reg(addr: u8) -> Result<u16, Error> {
+    let raw = i2c_read(addr).map_err(Error::Bus)?;
+    Ok(u16::from_be_bytes(raw))
+}
+
+// ISR: no alloc, no blocking, no logging that takes locks.
+// Share with the task through a lock-free queue or an atomic flag.
+#[inline(never)]
+pub fn on_irq() {
+    FLAG.store(true, core::sync::atomic::Ordering::Release);
+}
+
+// Memory: know flash vs RAM vs stack before you write the next crate.
+// Prefer &mut [u8] buffers you own. Avoid String on the device.

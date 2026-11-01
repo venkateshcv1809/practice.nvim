@@ -1,0 +1,43 @@
+{
+  "instructions": [
+    "Use w (and a count) to reach the target word.",
+    "Keep the text unchanged."
+  ],
+  "id": "builtin.motion-word",
+  "tool": "nvim",
+  "title": "Word motions",
+  "category": "motion",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "alpha beta gamma delta"
+      ],
+      "message": "Text does not match the exercise target."
+    },
+    {
+      "path": [
+        "cursor"
+      ],
+      "op": "equals",
+      "value": [
+        1,
+        11
+      ],
+      "message": "Move to row 1, column 12."
+    }
+  ],
+  "fixture": {
+    "generate": "motion.word",
+    "lines": [
+      "alpha beta gamma delta"
+    ],
+    "cursor": [
+      1,
+      0
+    ]
+  }
+}

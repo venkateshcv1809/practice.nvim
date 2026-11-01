@@ -1,0 +1,24 @@
+We choose Zig on the bootloader because the image must stay small and the
+control flow must stay visible. We accept a smaller hiring pool.
+
+We choose Rust on the application MCU because we cannot afford use-after-free
+in the field. We accept longer compile times and more ceremony.
+
+We choose MQTT over HTTP for telemetry because radios drop and sleep.
+We accept a broker as a production dependency.
+
+We choose QoS 1, not 2. Duplicates are cheaper than round trips.
+We accept idempotent consumers as a requirement.
+
+We choose two replicas, not ten. We do not know the load yet.
+We accept that a node loss is visible. We will scale from a measurement.
+
+We choose a managed broker for year one. We do not staff an MQTT team.
+We accept vendor limits and a bill. We keep the topic layout portable.
+
+A tradeoff card has four lines:
+we choose X
+because Y
+we accept Z
+we will revisit when W
+If you cannot fill Z, you have not chosen. You have hoped.

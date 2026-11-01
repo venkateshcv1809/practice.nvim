@@ -1,0 +1,11 @@
+{
+  "title": "Word motions",
+  "category": "motion",
+  "revision": 1,
+  "tags": [
+    "motion"
+  ],
+  "resource": "tutorials/motion-word/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.motion-word"
+}

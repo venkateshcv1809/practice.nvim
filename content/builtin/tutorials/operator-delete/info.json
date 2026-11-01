@@ -1,0 +1,11 @@
+{
+  "title": "Delete a word",
+  "category": "operator",
+  "revision": 1,
+  "tags": [
+    "operator"
+  ],
+  "resource": "tutorials/operator-delete/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.operator-delete"
+}

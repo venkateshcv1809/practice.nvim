@@ -1,0 +1,47 @@
+{
+  "instructions": [
+    "Move to X using h, j, k, l.",
+    "Keep the text unchanged."
+  ],
+  "id": "builtin.cursor-basic",
+  "tool": "nvim",
+  "title": "Move with h j k l",
+  "category": "cursor",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "start here",
+        ".........",
+        "....X...."
+      ],
+      "message": "Text does not match the exercise target."
+    },
+    {
+      "path": [
+        "cursor"
+      ],
+      "op": "equals",
+      "value": [
+        3,
+        4
+      ],
+      "message": "Move to row 3, column 5."
+    }
+  ],
+  "fixture": {
+    "generate": "cursor.basic",
+    "lines": [
+      "start here",
+      ".........",
+      "....X...."
+    ],
+    "cursor": [
+      1,
+      0
+    ]
+  }
+}

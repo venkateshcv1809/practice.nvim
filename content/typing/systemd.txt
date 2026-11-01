@@ -1,0 +1,35 @@
+systemctl status ssh
+systemctl is-active nginx
+sudo systemctl start app
+sudo systemctl stop app
+sudo systemctl restart app
+sudo systemctl enable --now app
+sudo systemctl daemon-reload
+
+journalctl -u app -n 100
+journalctl -u app -f
+journalctl -u app --since "10 min ago"
+journalctl -p err -b
+
+A unit is a file. Read it before you restart production:
+
+[Unit]
+Description=site api
+After=network.target
+
+[Service]
+Type=simple
+User=app
+WorkingDirectory=/srv/app
+ExecStart=/usr/bin/app --config /etc/app.toml
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+
+If the box is "down", this is the order:
+systemctl --failed
+journalctl -xe
+journalctl -u that.service -n 200
+Do not reboot to hide a crash loop.

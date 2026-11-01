@@ -1,0 +1,37 @@
+whoami
+id
+sudo -l
+sudo -u root -s
+su - 
+exit
+
+sudo visudo
+# prefer a group, not a password on every command
+# %deploy ALL=(root) NOPASSWD: /usr/bin/systemctl restart app
+
+ls -l /etc/shadow
+chmod 644 file
+chmod 600 ~/.ssh/id_ed25519
+chown user:user file
+umask 022
+
+ssh-keygen -t ed25519 -C "you@host"
+ssh-copy-id user@host
+ssh -i ~/.ssh/id_ed25519 user@host
+sudo adduser deploy
+sudo usermod -aG sudo deploy
+
+ip addr
+ip route
+ss -lntp
+ping -c 3 1.1.1.1
+df -h
+free -h
+uptime
+
+sudo journalctl -u ssh -n 50
+sudo tail -f /var/log/auth.log
+
+Privilege is a tool, not a personality.
+Use sudo for one command. Use su only when you must.
+Never paste a curl | sudo sh line you have not read.

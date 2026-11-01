@@ -1,0 +1,44 @@
+{
+  "instructions": [
+    "Record qb, I-, Escape, j0, q. Replay 2@b.",
+    "Expected: -apple / -banana / -cherry. Overwrites b."
+  ],
+  "id": "builtin.macro-prefix",
+  "tool": "nvim",
+  "title": "Repeat an edit",
+  "category": "macro",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "-apple",
+        "-banana",
+        "-cherry"
+      ],
+      "message": "Text does not match the exercise target."
+    },
+    {
+      "path": [
+        "registers",
+        "b"
+      ],
+      "op": "nonempty",
+      "message": "Record a macro in register b."
+    }
+  ],
+  "fixture": {
+    "generate": "macro.prefix",
+    "lines": [
+      "apple",
+      "banana",
+      "cherry"
+    ],
+    "cursor": [
+      1,
+      0
+    ]
+  }
+}

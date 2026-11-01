@@ -1,0 +1,30 @@
+{
+  "id": "home",
+  "title": "Practice",
+  "items": [
+    {
+      "id": "typing",
+      "title": "Typing",
+      "order": 10,
+      "action": "typing.start"
+    },
+    {
+      "id": "terminal",
+      "title": "Terminal",
+      "order": 20,
+      "action": "terminal.start"
+    },
+    {
+      "id": "ide",
+      "title": "Terminal IDE",
+      "order": 30,
+      "collection": "builtin.ide"
+    },
+    {
+      "id": "programming",
+      "title": "Programming",
+      "order": 40,
+      "collection": "prosetta.programming"
+    }
+  ]
+}

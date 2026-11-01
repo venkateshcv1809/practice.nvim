@@ -1,0 +1,11 @@
+{
+  "title": "Find a character",
+  "category": "motion",
+  "revision": 1,
+  "tags": [
+    "motion"
+  ],
+  "resource": "tutorials/motion-find/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.motion-find"
+}

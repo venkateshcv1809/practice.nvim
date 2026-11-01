@@ -1,0 +1,45 @@
+Bash is a shell: it reads a line, expands it, then runs a program.
+
+whoami
+pwd
+echo $HOME
+echo "$HOME/src"
+ls -la
+cd ~
+cd -
+mkdir -p tmp/work && cd tmp/work
+
+history
+!!
+!$
+ctrl-r   search history  (type this idea, then use it in a real shell)
+ctrl-a   start of line
+ctrl-e   end of line
+ctrl-u   cut to start
+ctrl-w   delete previous word
+alt-b / alt-f   move by word
+
+Jobs:
+sleep 20 &
+jobs
+fg
+ctrl-z
+bg
+kill %1
+
+Help:
+man ls
+help cd
+type ls
+command -v bash
+which bash
+echo $PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+Safe habits:
+set -euo pipefail
+cd -- "$dir"
+rm -i file
+cp -i src dst
+mv -i old new
+ls -- "$file"

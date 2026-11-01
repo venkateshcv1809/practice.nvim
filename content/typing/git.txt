@@ -1,0 +1,44 @@
+git init
+git status
+git diff
+git diff --staged
+git log --oneline -n 12
+git show HEAD
+
+git add file.lua
+git add -p
+git restore file.lua
+git restore --staged file.lua
+git commit -m "Explain the change in one line."
+
+git branch
+git switch -c topic
+git switch main
+git merge topic
+git rebase main
+
+git remote -v
+git fetch
+git pull
+git push -u origin topic
+
+git stash push -m "wip"
+git stash list
+git stash pop
+
+git blame file.lua
+git bisect start
+git revert HEAD
+git reset --soft HEAD~1
+
+See only what you meant to stage:
+git add -p
+git diff --cached
+git commit
+
+A small recovery map:
+git status
+git reflog
+git switch -
+git restore .
+Never use force until you can say what you will lose.

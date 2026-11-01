@@ -1,0 +1,24 @@
+In scope:
+bring-up of one MCU board to blink, UART, and MQTT telemetry
+a retained online status and a temperature topic
+a dashboard that shows last-seen and last value
+a written ADR for the broker choice
+weekly demo on hardware we both can power
+
+Out of scope:
+mobile apps
+multi-tenant billing
+custom plastic enclosure
+certification (CE / FCC) until a separate SOW
+24/7 on-call
+source code escrow
+a second radio stack
+
+Change requests are new scope. They are quoted before they are built.
+Hardware NRE and software time are billed apart. Unused hours do not
+convert into extra boards.
+
+Success is: a device we can reset, watch on the broker, and halt.
+Not: a platform. Not: a brand. Not: "while you are in there".
+
+If it is not in this list, it is a conversation, not a promise.

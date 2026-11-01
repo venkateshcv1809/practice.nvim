@@ -1,0 +1,18 @@
+2026-10-31  MQTT QoS 1 for telemetry
+Options: 0 (loss ok), 1 (dup ok), 2 (exactly once)
+Choice: 1. Consumers must be idempotent.
+Revisit: 10k devices or command-path latency budget.
+
+2026-11-02  Rust on the app MCU, Zig on the bootloader
+Options: C everywhere, C++ subset, Rust only, split
+Choice: split. Bootloader stays tiny and explicit. App wants memory safety.
+Revisit: first hardware spin bring-up.
+
+2026-11-08  Managed broker for year one
+Options: self-host Mosquitto, cloud IoT core, skip MQTT
+Choice: managed. We do not staff a broker yet.
+Revisit: bill > X or we need a feature the vendor will not give.
+
+Write the date. Write the options you actually had. Write the choice.
+Write when you will look again. That last line is how adults change their minds.
+Do not hide a decision in a chat. Do not pretend there was only one option.

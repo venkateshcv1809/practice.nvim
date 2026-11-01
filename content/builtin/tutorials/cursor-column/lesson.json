@@ -1,0 +1,47 @@
+{
+  "instructions": [
+    "Use j and | to reach X.",
+    "Keep the text unchanged."
+  ],
+  "id": "builtin.cursor-column",
+  "tool": "nvim",
+  "title": "Reach a column",
+  "category": "cursor",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "start here",
+        ".........",
+        "......X.."
+      ],
+      "message": "Text does not match the exercise target."
+    },
+    {
+      "path": [
+        "cursor"
+      ],
+      "op": "equals",
+      "value": [
+        3,
+        6
+      ],
+      "message": "Move to row 3, column 7."
+    }
+  ],
+  "fixture": {
+    "generate": "cursor.column",
+    "lines": [
+      "start here",
+      ".........",
+      "......X.."
+    ],
+    "cursor": [
+      1,
+      0
+    ]
+  }
+}

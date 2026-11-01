@@ -1,0 +1,42 @@
+Zsh is a shell too. Many Bash habits work. A few extras are worth the fingers.
+
+autoload -U colors && colors
+echo $ZSH_VERSION
+echo $fpath
+
+cd without typing cd, if you like:
+setopt AUTO_CD
+~/src
+
+Completion is the main gift:
+ls <tab>
+cd src/<tab>
+git chec<tab>
+kill <tab>
+
+Globbing is richer than Bash:
+ls **/*.lua
+ls *.txt~
+echo {src,test}/*.lua
+echo {1..5}
+
+History:
+setopt SHARE_HISTORY
+fc -l 1
+r grep
+ctrl-r
+
+Directory stack:
+dirs -v
+pushd ~/src
+popd
+cd -2
+
+Aliases and functions live in ~/.zshrc:
+alias ll='ls -la'
+mkcd() { mkdir -p "$1" && cd "$1" }
+
+Plugins often come from a manager, but the shell is still zsh:
+echo $PROMPT
+bindkey -e
+bindkey '^[[A' up-line-or-search

@@ -1,0 +1,11 @@
+{
+  "title": "Change a word",
+  "category": "operator",
+  "revision": 1,
+  "tags": [
+    "operator"
+  ],
+  "resource": "tutorials/operator-change/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.operator-change"
+}

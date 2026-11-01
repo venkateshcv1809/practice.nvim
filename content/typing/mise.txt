@@ -1,0 +1,40 @@
+mise installs and switches tool versions. One file in the project, many runtimes.
+
+mise --version
+mise ls
+mise ls-remote node
+mise install
+mise install node@20
+mise use node@20
+mise use python@3.12
+mise use go@1.22
+mise use rust@stable
+mise use zig@0.13
+
+mise current
+mise where node
+mise exec -- node --version
+mise run
+mise tasks
+
+A project file named mise.toml can pin tools:
+[tools]
+node = "20"
+python = "3.12"
+go = "1.22"
+
+Then:
+cd ~/src/app
+mise trust
+mise install
+node --version
+python --version
+
+Compared with ad-hoc installs:
+sudo apt install nodejs
+# the whole machine gets one version
+mise use node@20
+# this directory gets the version the project asked for
+
+Activate once in ~/.zshrc:
+eval "$(mise activate zsh)"

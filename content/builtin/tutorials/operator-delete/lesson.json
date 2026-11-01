@@ -1,0 +1,31 @@
+{
+  "instructions": [
+    "Delete the extra word with dw."
+  ],
+  "id": "builtin.operator-delete",
+  "tool": "nvim",
+  "title": "Delete a word",
+  "category": "operator",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "keep words"
+      ],
+      "message": "Text does not match the exercise target."
+    }
+  ],
+  "fixture": {
+    "generate": "operator.delete",
+    "lines": [
+      "keep extra words"
+    ],
+    "cursor": [
+      1,
+      5
+    ]
+  }
+}

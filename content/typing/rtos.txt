@@ -1,0 +1,20 @@
+An RTOS splits time into tasks. The chip is still one core; it only looks concurrent.
+
+Rules that keep firmware honest:
+The ISR is short. It sets a flag or pushes a queue. It does not talk to the network.
+A task that waits must have a timeout. Infinite wait is a silent hang.
+Shared data needs a lock, a queue, or it is not shared.
+Do not malloc in the hot path. Allocate at boot or use a pool.
+Priority inversion is real. Know which lock your high-priority task takes.
+
+Typical shape:
+boot -> init clocks -> init drivers -> create queues -> start scheduler
+task_sensors: read, push sample
+task_radio: wait sample, publish
+task_watchdog: pet the dog, reboot if starved
+
+If you can say these sentences without thinking, you can debug a freeze:
+Who owns the buffer now?
+Who runs if this IRQ fires?
+What happens if the queue is full?
+What happens if the bus NAKs for 200 ms?

@@ -1,0 +1,42 @@
+const std = @import("std");
+const micro = @import("microzig");
+
+pub const panic = micro.panic;
+
+pub fn main() !void {
+    const pin = gpio.led0();
+    pin.set_output();
+    while (true) {
+        pin.write(true);
+        busy_wait(200);
+        pin.write(false);
+        busy_wait(800);
+    }
+}
+
+pub fn crc8(data: []const u8) u8 {
+    var crc: u8 = 0;
+    for (data) |b| crc ^= b;
+    return crc;
+}
+
+pub fn readReg(bus: anytype, addr: u8) !u16 {
+    var buf: [2]u8 = undefined;
+    try bus.read(addr, &buf);
+    return std.mem.readInt(u16, &buf, .big);
+}
+
+pub fn tick(allocator: std.mem.Allocator) ![]u8 {
+    // On device, pass a fixed buffer instead of the heap when you can.
+    var list = std.ArrayList(u8).init(allocator);
+    errdefer list.deinit();
+    try list.appendSlice("ok");
+    return list.toOwnedSlice();
+}
+
+// comptime is for sizes and pin maps, not for hiding control flow.
+pub fn stackRoom(comptime n: usize) [n]u8 {
+    return [_]u8{0} ** n;
+}
+
+// ISR: no allocator, no wait, signal a task. The task does the work.

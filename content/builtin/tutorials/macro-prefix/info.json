@@ -1,0 +1,11 @@
+{
+  "title": "Repeat an edit",
+  "category": "macro",
+  "revision": 1,
+  "tags": [
+    "macro"
+  ],
+  "resource": "tutorials/macro-prefix/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.macro-prefix"
+}

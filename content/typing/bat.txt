@@ -1,0 +1,23 @@
+bat is cat with syntax highlighting, line numbers, and git markers.
+
+bat file.lua
+bat -n file.lua
+bat -p file.lua
+bat --style=plain file.lua
+bat --theme=TwoDark file.lua
+bat -r 12:40 file.lua
+bat README.md src/main.rs
+
+Many pages:
+bat file.lua file.py
+bat --paging=never notes.txt
+
+Use it in pipes when the next tool needs text, not a pager:
+bat -p file.lua | rg TODO
+bat -p file.lua | head
+git show HEAD:file.lua | bat -l lua
+
+Helpful defaults:
+export BAT_STYLE=plain
+alias cat='bat --paging=never'
+man bat

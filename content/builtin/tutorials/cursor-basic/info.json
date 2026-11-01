@@ -1,0 +1,11 @@
+{
+  "title": "Move with h j k l",
+  "category": "cursor",
+  "revision": 1,
+  "tags": [
+    "cursor"
+  ],
+  "resource": "tutorials/cursor-basic/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.cursor-basic"
+}

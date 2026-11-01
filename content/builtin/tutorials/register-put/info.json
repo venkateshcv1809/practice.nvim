@@ -1,0 +1,11 @@
+{
+  "title": "Put from a named register",
+  "category": "register",
+  "revision": 1,
+  "tags": [
+    "register"
+  ],
+  "resource": "tutorials/register-put/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.register-put"
+}

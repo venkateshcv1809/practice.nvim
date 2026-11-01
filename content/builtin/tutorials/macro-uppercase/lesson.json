@@ -1,0 +1,44 @@
+{
+  "instructions": [
+    "Record qa, gUiw, j0, q. Replay @a then @@.",
+    "Expected: ONE / TWO / THREE. Overwrites a."
+  ],
+  "id": "builtin.macro-uppercase",
+  "tool": "nvim",
+  "title": "Record and replay",
+  "category": "macro",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "ONE",
+        "TWO",
+        "THREE"
+      ],
+      "message": "Text does not match the exercise target."
+    },
+    {
+      "path": [
+        "registers",
+        "a"
+      ],
+      "op": "nonempty",
+      "message": "Record a macro in register a."
+    }
+  ],
+  "fixture": {
+    "generate": "macro.uppercase",
+    "lines": [
+      "one",
+      "two",
+      "three"
+    ],
+    "cursor": [
+      1,
+      0
+    ]
+  }
+}

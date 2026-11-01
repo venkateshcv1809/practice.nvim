@@ -1,0 +1,31 @@
+{
+  "instructions": [
+    "Change inside quotes with ci\", type the new word, then Escape."
+  ],
+  "id": "builtin.text-object-quotes",
+  "tool": "nvim",
+  "title": "Inside quotes",
+  "category": "text-object",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "say \"new\" now"
+      ],
+      "message": "Text does not match the exercise target."
+    }
+  ],
+  "fixture": {
+    "generate": "textobject.quotes",
+    "lines": [
+      "say \"old words\" now"
+    ],
+    "cursor": [
+      1,
+      7
+    ]
+  }
+}

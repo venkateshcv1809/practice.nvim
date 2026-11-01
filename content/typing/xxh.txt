@@ -1,0 +1,25 @@
+xxh is SSH that can bring your shell with you. The remote machine stays
+clean; your prompt, aliases, and plugins travel for the session.
+
+xxh user@host
+xxh user@host +s zsh
+xxh user@host +s bash
+xxh user@host +i
+xxh +I xxh-plugin-zsh-ohmyzsh
+xxh +L
+
+Compared with plain ssh:
+ssh user@host
+# you get their shell, their PATH, their empty prompt
+xxh user@host
+# you get a familiar shell without writing files into their home
+
+Common shape:
+xxh ada@192.168.1.20 +s zsh
+xxh ada@host -p 2222
+xxh ada@host --install-xxh-home /tmp/xxh
+
+If xxh is not installed yet, the idea is still worth typing:
+ssh first to reach the machine.
+xxh later, when you want your own keyboard habits on that machine.
+Keep secrets out of the command line. Use keys, not passwords in history.

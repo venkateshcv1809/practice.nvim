@@ -1,0 +1,43 @@
+{
+  "instructions": [
+    "Use f and the target character to jump to it.",
+    "Keep the text unchanged."
+  ],
+  "id": "builtin.motion-find",
+  "tool": "nvim",
+  "title": "Find a character",
+  "category": "motion",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "find the X in this line"
+      ],
+      "message": "Text does not match the exercise target."
+    },
+    {
+      "path": [
+        "cursor"
+      ],
+      "op": "equals",
+      "value": [
+        1,
+        9
+      ],
+      "message": "Move to row 1, column 10."
+    }
+  ],
+  "fixture": {
+    "generate": "motion.find",
+    "lines": [
+      "find the X in this line"
+    ],
+    "cursor": [
+      1,
+      0
+    ]
+  }
+}

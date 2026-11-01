@@ -1,0 +1,32 @@
+ripgrep (rg) searches file contents. It is grep that knows your repo.
+
+rg TODO
+rg -n TODO lua
+rg -i error
+rg -w id
+rg --hidden TODO
+rg -t lua TODO
+rg -g '*.md' practice
+rg -l TODO
+rg -c TODO
+rg -A 2 -B 2 TODO
+rg --json TODO | head
+
+Replace is still your editor. rg only finds:
+rg -n 'fixture.generate' lua
+rg -n 'typing' docs
+
+Useful pipes:
+fd -e lua | xargs rg TODO
+rg -l TODO | fzf
+rg --files | fzf
+
+Compared with grep:
+grep -R TODO .
+rg TODO
+grep -n TODO file.lua
+rg -n TODO file.lua
+
+When the list is huge, count first:
+rg -c TODO
+rg --stats TODO

@@ -1,0 +1,27 @@
+eza is a modern ls. It lists files, then gets out of the way.
+
+eza
+eza -l
+eza -la
+eza -l --git
+eza --tree
+eza --tree --level=2
+eza --icons
+eza -l --time-style=long-iso
+eza -l --sort=modified
+eza -l --group-directories-first
+eza src lua tests
+
+Compared with ls:
+ls -la
+eza -la --git
+
+Useful aliases in ~/.zshrc:
+alias ls='eza'
+alias ll='eza -l --git --group-directories-first'
+alias lt='eza --tree --level=2'
+
+Pipe it like any other command:
+eza -1 | wc -l
+eza -1 | fzf
+eza --json

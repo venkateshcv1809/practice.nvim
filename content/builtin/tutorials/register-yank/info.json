@@ -1,0 +1,11 @@
+{
+  "title": "Yank to a named register",
+  "category": "register",
+  "revision": 1,
+  "tags": [
+    "register"
+  ],
+  "resource": "tutorials/register-yank/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.register-yank"
+}

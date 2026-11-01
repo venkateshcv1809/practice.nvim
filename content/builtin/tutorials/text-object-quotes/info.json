@@ -1,0 +1,11 @@
+{
+  "title": "Inside quotes",
+  "category": "text-object",
+  "revision": 1,
+  "tags": [
+    "text-object"
+  ],
+  "resource": "tutorials/text-object-quotes/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.text-object-quotes"
+}

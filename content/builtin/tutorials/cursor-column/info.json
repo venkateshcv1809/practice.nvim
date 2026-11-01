@@ -1,0 +1,11 @@
+{
+  "title": "Reach a column",
+  "category": "cursor",
+  "revision": 1,
+  "tags": [
+    "cursor"
+  ],
+  "resource": "tutorials/cursor-column/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.cursor-column"
+}

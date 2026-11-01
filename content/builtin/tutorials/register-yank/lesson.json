@@ -1,0 +1,41 @@
+{
+  "instructions": [
+    "Yank the first word into register a with \"ayiw.",
+    "Keep the text unchanged."
+  ],
+  "id": "builtin.register-yank",
+  "tool": "nvim",
+  "title": "Yank to a named register",
+  "category": "register",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "seed grows"
+      ],
+      "message": "Text does not match the exercise target."
+    },
+    {
+      "path": [
+        "registers",
+        "a"
+      ],
+      "op": "equals",
+      "value": "seed",
+      "message": "Register a does not contain the expected text."
+    }
+  ],
+  "fixture": {
+    "generate": "register.yank",
+    "lines": [
+      "seed grows"
+    ],
+    "cursor": [
+      1,
+      0
+    ]
+  }
+}

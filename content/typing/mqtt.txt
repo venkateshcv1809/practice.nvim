@@ -1,0 +1,29 @@
+MQTT is a small pub/sub protocol. Devices talk to a broker, not to each other.
+
+mosquitto_sub -h localhost -t 'site/+/temp' -v
+mosquitto_pub -h localhost -t 'site/a1/temp' -m '21.5' -q 1
+mosquitto_pub -t 'site/a1/status' -m 'online' -r
+
+Topics are paths, not folders:
+site/{device_id}/temp
+site/{device_id}/cmd
+$SYS/# is for the broker. Do not publish there.
+
+QoS:
+0  at most once   fire and forget
+1  at least once  you may see duplicates
+2  exactly once   expensive; rarely your first choice
+
+A device loop:
+connect
+subscribe site/{id}/cmd
+publish site/{id}/status online (retained)
+loop: read sensor, publish temp, wait 10s
+on disconnect: retry with backoff, do not spin
+
+Keep payloads small and boring:
+{"t":21.5,"v":1}
+Not a novel, not a stack dump, not a secret.
+
+TLS and a unique password per device. One leaked firmware image should not
+open the whole fleet.

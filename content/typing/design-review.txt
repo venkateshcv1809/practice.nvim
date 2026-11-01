@@ -1,0 +1,19 @@
+This interface returns a String. On the device that is a heap in a hot path.
+Can we take a &mut [u8] and return the length?
+
+The retry loop has no jitter. Ten thousand devices will reconnect together.
+Please add backoff, a cap, and a metric for retry count.
+
+I do not understand who owns the buffer after publish().
+If the radio DMA still holds it, the next fill is a data race. Please say so
+in the comment, or copy.
+
+The happy path is clear. The NAK path returns () and logs.
+Callers cannot tell a full queue from a dead bus. Return a Result.
+
+This is good: the module boundary matches the PCB net names.
+I would keep that. I would not leak embassy types through the crate root.
+
+A review is not a score. It is a request for a safer next revision.
+Be specific. Be kind. Point at a line. Offer a shape, not a vibe.
+If you would not say it to the author at the bench, do not type it in the PR.

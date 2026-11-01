@@ -1,0 +1,32 @@
+{
+  "instructions": [
+    "Delete inside parentheses with di(.",
+    "Leave other pairs unchanged."
+  ],
+  "id": "builtin.text-object-parens",
+  "tool": "nvim",
+  "title": "Inside parentheses",
+  "category": "text-object",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "call()"
+      ],
+      "message": "Text does not match the exercise target."
+    }
+  ],
+  "fixture": {
+    "generate": "textobject.parens",
+    "lines": [
+      "call(remove me)"
+    ],
+    "cursor": [
+      1,
+      7
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+I observed the rollout went out on Friday without a halt flag.
+I need a way to stop a bad image before it reaches the fleet.
+I propose we add a staged ring and a written halt owner before the next tag.
+
+I observed the API contract changed in the same PR as the dashboard.
+I need those to move on different clocks.
+I propose we split the PR and freeze the payload schema this week.
+
+I hear that you want the date we promised.
+I also hear the radio driver is not done.
+I can ship a lab demo on that date, or a field build two weeks later.
+I cannot honestly ship both. Which one should we tell the customer?
+
+When we disagree:
+repeat what they want in one sentence
+name the constraint without a villain
+offer two real options
+ask them to choose
+If they will not choose, write the default you will take, and when.
+
+Disagree, then commit. After the decision, do not campaign in the hallway.
+Revisit on the date in the decision log, not in the next meeting's mood.

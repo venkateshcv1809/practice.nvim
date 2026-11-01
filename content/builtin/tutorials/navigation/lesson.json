@@ -1,0 +1,28 @@
+{
+  "id": "builtin.navigation",
+  "title": "Navigation",
+  "tool": "navigation",
+  "category": "navigation",
+  "instructions": [
+    "Reach uppercase X. Ignore lowercase x."
+  ],
+  "fixture": {},
+  "checks": [
+    {
+      "path": [
+        "unchanged"
+      ],
+      "op": "equals",
+      "value": true,
+      "message": "Retry the board before navigating."
+    },
+    {
+      "path": [
+        "reached"
+      ],
+      "op": "equals",
+      "value": true,
+      "message": "Keep moving toward uppercase X."
+    }
+  ]
+}

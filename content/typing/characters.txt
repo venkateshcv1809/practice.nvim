@@ -1,0 +1,16 @@
+` ~ ! @ # $ % ^ & * ( ) - _ = + [ ] { } \ | ; : ' " , . / < > ?
+!! ?? ... -- --- -> => :: := += -= *= /= %= == != <= >= && ||
+() [] {} <> "" '' `` /* */ // # // comment-like, but type the glyphs
+{a} [b] (c) <d> ${x} #{y} %{z} @arg #id .class /path
+foo_bar foo-bar foo.bar foo/bar foo::bar foo->bar foo=>bar
+it's "quoted" 'also' `ticks` (paren) [square] {curly} <angle>
+a_b-c.d/e\f|g;h:i,j k?l!m@n#o$p%q^r&s*t+u=v~w
+JSON-ish: {"ok":true,"n":3,"tags":["a","b"]}
+CSS-ish: .box { width: 12%; margin: 0 auto; }
+Shell-ish: echo "$HOME" && true || false; cat <<'EOF'
+Regex-ish: ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$
+Pairs: ()() [][] {}{} <> <> ""'' `` -- ++ ** //
+Shift row: ~!@#$%^&*()_+   number row: `1234567890-=
+Brackets mix: ([]) {()} <[]> {[]} (()[]) {<>}
+Keep wrists easy; type each cluster twice, then a short pause.
+~!@#$%^&*()_+`  {}|:<>?  [];',./  -=  and again: ~!@#$%^&*()_+

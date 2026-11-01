@@ -1,0 +1,21 @@
+Device --UART/SPI--> MCU firmware
+MCU --MQTT/TLS--> broker
+broker --rule--> ingest
+ingest --> store (time series)
+store --> dashboard / alert / command queue
+command queue --MQTT--> MCU
+MCU --> actuator
+
+One sentence per hop. If you cannot name the hop, you do not own the system.
+
+site/a1/status   retained   online|offline
+site/a1/temp     qos1       {"t":21.5,"v":1}
+site/a1/cmd      qos1       {"led":1,"v":1}
+
+Failure is a path too:
+radio down -> local buffer (N samples) -> drop oldest -> reconnect -> flush
+broker down -> devices retry with backoff -> ingest lag -> dashboard stale
+bad firmware -> fleet is not a single push -> staged rollout -> halt on error
+
+The architect's job is not a pretty box diagram.
+It is knowing which hop you will debug at 2am, and who is allowed to publish.

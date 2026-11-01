@@ -1,0 +1,179 @@
+{
+  "title": "Built-in practice",
+  "id": "builtin",
+  "items": [
+    {
+      "path": "tutorials/cursor-basic/info.json",
+      "order": 1
+    },
+    {
+      "path": "tutorials/cursor-column/info.json",
+      "order": 2
+    },
+    {
+      "path": "tutorials/motion-word/info.json",
+      "order": 3
+    },
+    {
+      "path": "tutorials/motion-find/info.json",
+      "order": 4
+    },
+    {
+      "path": "tutorials/operator-delete/info.json",
+      "order": 5
+    },
+    {
+      "path": "tutorials/operator-change/info.json",
+      "order": 6
+    },
+    {
+      "path": "tutorials/text-object-quotes/info.json",
+      "order": 7
+    },
+    {
+      "path": "tutorials/text-object-parens/info.json",
+      "order": 8
+    },
+    {
+      "path": "tutorials/register-yank/info.json",
+      "order": 9
+    },
+    {
+      "path": "tutorials/register-put/info.json",
+      "order": 10
+    },
+    {
+      "path": "tutorials/macro-uppercase/info.json",
+      "order": 11
+    },
+    {
+      "path": "tutorials/macro-prefix/info.json",
+      "order": 12
+    },
+    {
+      "path": "tutorials/navigation/info.json",
+      "order": 13
+    }
+  ],
+  "collections": [
+    {
+      "title": "Editor foundations",
+      "id": "builtin.editing",
+      "items": [
+        {
+          "id": "builtin.cursor-basic",
+          "order": 1
+        },
+        {
+          "id": "builtin.cursor-column",
+          "order": 2
+        },
+        {
+          "id": "builtin.motion-word",
+          "order": 3
+        },
+        {
+          "id": "builtin.motion-find",
+          "order": 4
+        },
+        {
+          "id": "builtin.operator-delete",
+          "order": 5
+        },
+        {
+          "id": "builtin.operator-change",
+          "order": 6
+        },
+        {
+          "id": "builtin.text-object-quotes",
+          "order": 7
+        },
+        {
+          "id": "builtin.text-object-parens",
+          "order": 8
+        },
+        {
+          "id": "builtin.register-yank",
+          "order": 9
+        },
+        {
+          "id": "builtin.register-put",
+          "order": 10
+        },
+        {
+          "id": "builtin.macro-uppercase",
+          "order": 11
+        },
+        {
+          "id": "builtin.macro-prefix",
+          "order": 12
+        }
+      ]
+    },
+    {
+      "title": "Navigation game",
+      "id": "builtin.navigation",
+      "items": [
+        {
+          "id": "builtin.navigation",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "builtin.ide",
+      "title": "Terminal IDE",
+      "items": [
+        {
+          "id": "builtin.navigation",
+          "order": 10
+        },
+        {
+          "id": "builtin.cursor-column",
+          "order": 30
+        },
+        {
+          "id": "builtin.motion-word",
+          "order": 40
+        },
+        {
+          "id": "builtin.motion-find",
+          "order": 50
+        },
+        {
+          "id": "builtin.operator-delete",
+          "order": 60
+        },
+        {
+          "id": "builtin.operator-change",
+          "order": 70
+        },
+        {
+          "id": "builtin.text-object-quotes",
+          "order": 80
+        },
+        {
+          "id": "builtin.text-object-parens",
+          "order": 90
+        },
+        {
+          "id": "builtin.register-yank",
+          "order": 100
+        },
+        {
+          "id": "builtin.register-put",
+          "order": 110
+        },
+        {
+          "id": "builtin.macro-uppercase",
+          "order": 120
+        },
+        {
+          "id": "builtin.macro-prefix",
+          "order": 130
+        }
+      ]
+    }
+  ],
+  "schema_version": 1
+}

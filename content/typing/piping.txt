@@ -1,0 +1,39 @@
+A pipe | sends the output of one command into the next command as input.
+Think of it as a hose: left side produces text, right side consumes that text.
+
+command_one | command_two
+ls | wc -l
+ls -1 | sort | uniq
+cat notes.txt | head -n 20
+printf 'b\na\nc\n' | sort
+echo 'hello world' | tr 'a-z' 'A-Z'
+
+grep finds lines. It is happiest on the right side of a pipe:
+cat app.log | grep error
+cat app.log | grep -i error | head
+
+wc counts. wc -l counts lines:
+find . -name '*.lua' | wc -l
+
+cut and awk pick fields:
+echo 'ada 7 lua' | awk '{ print $1, $3 }'
+echo 'a,b,c' | cut -d, -f2
+
+tee copies the stream into a file and still passes it on:
+ls | tee files.txt | wc -l
+
+Redirection is not a pipe. It talks to files:
+echo hi > out.txt
+echo hi >> out.txt
+sort < names.txt
+cmd 2> errors.txt
+cmd > out.txt 2>&1
+
+A pipeline fails at the first broken piece if pipefail is set:
+set -o pipefail
+false | true
+echo "the exit status is about the whole pipe, not only the last command"
+
+Practice the shape until it feels boring:
+produce | filter | count
+ls | grep lua | wc -l

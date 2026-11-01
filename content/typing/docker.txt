@@ -1,0 +1,25 @@
+docker version
+docker ps
+docker ps -a
+docker images
+docker logs -f api
+docker exec -it api sh
+
+docker build -t site/api:0.1 .
+docker run --rm -p 8080:8080 site/api:0.1
+docker run --rm -e APP_ENV=dev -v $PWD:/work site/api:0.1
+docker compose up -d
+docker compose logs -f
+docker compose down
+
+FROM debian:bookworm-slim
+WORKDIR /app
+COPY bin/api /usr/bin/api
+USER 65532:65532
+ENTRYPOINT ["/usr/bin/api"]
+
+A container is a process with a filesystem, not a tiny VM.
+One process, one reason to live, logs on stdout.
+Do not store secrets in the image. Do not run as root if you can avoid it.
+Tag images with a version, not only latest.
+If it only works on your laptop, it is not an image yet.

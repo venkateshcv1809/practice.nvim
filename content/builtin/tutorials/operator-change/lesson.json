@@ -1,0 +1,31 @@
+{
+  "instructions": [
+    "Use cw, type the replacement word, then Escape."
+  ],
+  "id": "builtin.operator-change",
+  "tool": "nvim",
+  "title": "Change a word",
+  "category": "operator",
+  "checks": [
+    {
+      "path": [
+        "lines"
+      ],
+      "op": "equals",
+      "value": [
+        "green light"
+      ],
+      "message": "Text does not match the exercise target."
+    }
+  ],
+  "fixture": {
+    "generate": "operator.change",
+    "lines": [
+      "red light"
+    ],
+    "cursor": [
+      1,
+      0
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+Speed is a side effect. Accuracy is the path. If you chase 120 wpm while
+dropping 12% of the glyphs, you are rehearsing chaos. Aim first for a clean
+98% on a 45-wpm pass, then 55, then 70. The clock is allowed to wait.
+
+Type like you are sending a patch, not winning a race. Paths such as
+~/src/app/v2/main.ts and URLs like https://127.0.0.1:8080/health?ready=1
+should feel ordinary. So should digits in dates (2026-10-31), money ($48.50),
+and counts (3 windows, 11 buffers, 256 KiB).
+
+Keep your eyes ~8-12 characters ahead. Do not stare at the key you just missed.
+A single backspace is cheaper than a panicked burst of 4-7 corrections. When a
+symbol cluster appears -- { } [ ] ( ) < > -- slow to 80% of your comfort pace,
+then resume. Rhythm beats adrenaline.
+
+A practical drill: 5 minutes of prose, 3 minutes of code, 2 minutes of numbers.
+Log the result as 5+3+2, not as a mood. Tomorrow copy the same mix. In 14 days
+you will have 14 quiet data points, not 14 arguments with yourself. Faster is
+what accurate looks like after it has been repeated.

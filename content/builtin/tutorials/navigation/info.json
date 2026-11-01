@@ -1,0 +1,11 @@
+{
+  "id": "builtin.navigation",
+  "title": "Navigation",
+  "tool": "navigation",
+  "category": "navigation",
+  "revision": 1,
+  "tags": [
+    "navigation"
+  ],
+  "resource": "tutorials/navigation/lesson.json"
+}

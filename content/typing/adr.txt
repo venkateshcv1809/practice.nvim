@@ -1,0 +1,23 @@
+# ADR 001: MQTT for device telemetry
+
+Date: 2026-10-31
+Status: accepted
+
+## Context
+Devices are lossy, sleepy, and many. We need a path from the field to a store
+that operators can reason about. HTTP from every sensor is simple and noisy.
+A custom TCP protocol is ours forever.
+
+## Decision
+Use MQTT 5 to a managed broker. Devices publish site/{id}/temp at QoS 1.
+Commands go to site/{id}/cmd. Status is retained. Payloads are JSON with a
+schema version field.
+
+## Consequences
+We gain a boring, observable pipe and lose control of broker internals.
+We must design for duplicates and for retained stale status.
+We do not invent a new wire format this quarter.
+
+## Revisit
+When we have 10k devices or when command latency must be under 50 ms.
+If either happens, write ADR 00N. Do not silently grow a sidecar.

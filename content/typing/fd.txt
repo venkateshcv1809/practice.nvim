@@ -1,0 +1,27 @@
+fd finds files by name. It is a friendlier find for everyday work.
+
+fd
+fd lua
+fd -e lua
+fd -e rs -e toml
+fd '^test' lua
+fd -H .env
+fd -t d src
+fd -t f 'init' lua
+fd -x wc -l
+fd -e md --exec bat
+
+Compared with find:
+find . -name '*.lua'
+fd -e lua
+find . -type d -name node_modules
+fd -t d node_modules
+
+Pipe names into other tools:
+fd -e lua | fzf
+fd -e lua | xargs rg TODO
+fd -e lua | wc -l
+
+Stay in one project root:
+fd --full-path lua/practice
+fd --glob '*.json' content

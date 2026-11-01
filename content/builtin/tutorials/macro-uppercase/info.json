@@ -1,0 +1,11 @@
+{
+  "title": "Record and replay",
+  "category": "macro",
+  "revision": 1,
+  "tags": [
+    "macro"
+  ],
+  "resource": "tutorials/macro-uppercase/lesson.json",
+  "tool": "nvim",
+  "id": "builtin.macro-uppercase"
+}

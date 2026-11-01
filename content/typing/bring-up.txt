@@ -1,0 +1,16 @@
+Bring-up is the first honest conversation with a board. Do not write an app yet.
+
+1. Power. Measure 3V3 and 1V8 before you plug USB. Smell is a valid sensor.
+2. Ground. Common ground with the probe. Floating grounds invent ghosts.
+3. Reset. Hold reset, release, watch the current jump. No jump, no life.
+4. Clocks. HSE / LSE / PLL. If the clock is wrong, everything is "almost".
+5. Debug. SWD / JTAG. Connect, halt, read PC. If you cannot halt, stop.
+6. Blink. One GPIO, one LED, one delay. This is the handshake.
+7. UART. 115200 8N1. Print a line from reset. If you have logs, you have a job.
+8. Flash. Read back the image you think you wrote.
+9. Sensors. One bus, one ACK. Then the real driver.
+10. Radio last. Radios hide power and timing bugs until you are tired.
+
+Do not skip a step because the previous one "probably" worked.
+Write the measurements down. Voltage, current, clock, probe serial.
+The next failure will not remember your optimism.

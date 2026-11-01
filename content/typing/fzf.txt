@@ -1,0 +1,29 @@
+fzf is a fuzzy finder. It turns a list into a searchable menu.
+
+echo 'ada
+grace
+barbara' | fzf
+ls | fzf
+fd -e lua | fzf
+git branch | fzf
+
+Key idea: some command prints lines, fzf lets you pick one.
+selected=$(fd -e lua | fzf)
+nvim "$selected"
+
+Preview on the right:
+fd -e lua | fzf --preview 'bat -n --color=always {}'
+git log --oneline | fzf --preview 'git show --stat {1}'
+
+Multi-select:
+fd -e lua | fzf -m
+
+Ctrl shortcuts while fzf is open:
+ctrl-c cancel
+enter accept
+tab toggle in multi
+ctrl-j / ctrl-k move
+
+A tiny Neovim-friendly loop:
+file=$(fzf) && nvim "$file"
+dir=$(fd -t d | fzf) && cd "$dir"
