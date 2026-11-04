@@ -13,15 +13,17 @@ groups, and order are configurable independently of the lessons:
 4. **Programming** — solve exercises using an external test runner.
 
 Today this repository is a Lua plugin for Neovim 0.9+, with no required external
-dependencies. It includes a navigation game, twelve editor lessons, and optional
-Prosetta integration, a configurable landing screen, and file-based typing in native
-splits. Terminal practice is still planned.
+dependencies. It includes a configurable landing screen, a navigation game, twelve editor
+lessons, file-based typing in native splits, lesson-driven terminal tasks in
+disposable workspaces, and optional Prosetta integration.
 Neovim is the supported host; teaching Vim concepts does not require a parallel Vim plugin.
 
 ## Start practicing
 
-Current plugin version is **0.1.0**. Pin git tag `v0.1.0`, or follow `develop`
-for unreleased commits. See [versioning](docs/usage.md#versioning).
+Latest tagged plugin version is **0.1.0**. Pin a release tag or commit SHA, or
+follow `develop` for unreleased work. GitHub release notes are generated from
+merged pull requests and commits when a `v*` tag is pushed; see the
+[versioning guide](docs/usage.md#versioning).
 
 Install with your plugin manager, or clone into
 `stdpath('data')/site/pack/plugins/start/nvim-practice`. lazy.nvim:
@@ -42,7 +44,12 @@ Restart Neovim, then run:
 - `:Practice` — open the landing screen.
 - `:PracticeContinue` — start the first unfinished lesson.
 - `:PracticeList` — choose any available lesson.
+- `:PracticeProsetta` — choose a programming exercise, starting with editable starter code.
+- `:PracticeSolution` — view the selected language's authored solution; `q` returns to your draft.
+- `:PracticeExplanation` — read the concept's `README.md` explanation.
+- `:PracticeRun` / `:PracticeSubmit` — evaluate public cases / all cases using the native CLI.
 - `:PracticeMenu` — return to the main menu from practice.
+- `:PracticeTerminal` — choose a shell task in a temporary workspace.
 - `:PracticeTypingDemo` — try typing in a full Neovim tab.
 - `:PracticeTyping path/to/file` — type a reference file.
 
@@ -83,6 +90,25 @@ lessons, Prosetta setup, and verification commands.
 The [installation guide](docs/usage.md#installation) includes lazy.nvim, native
 packages, local checkouts, and how to pin `0.1.0` or follow `develop`.
 
+## Programming practice
+
+Programming starts in **practice**: the editable buffer contains the starter,
+not the solved implementation. `\p` opens the authored `PROBLEM.md`; `\v`
+opens the read-only solution for the selected language, and `\e` opens its
+`README.md` explanation. Press `q` in any reference view to return to the same
+draft and cursor. Viewing a solution never runs it or records completion.
+
+`\c` runs public cases (`:PracticeRun`, with `:PracticeCheck` retained), and
+`\s` submits all cases (`:PracticeSubmit`). Both always send the practice
+buffer to the native Prosetta CLI, even when a reference view has focus. A
+successful programming run leaves the code in place for review; editor drills
+retain their existing automatic repetition. Retry explicitly restores the starter.
+Missing reference files are shown as unavailable rather than filled with metadata
+or another language's code.
+
+This workflow uses the native CLI and installed language toolchains, not the
+browser SDK. See [Prosetta setup](docs/usage.md#prosetta).
+
 ## Roadmap
 
 **Built:** reusable Lua core, metadata-first catalog/providers, stable tutorial
@@ -91,8 +117,8 @@ optional adapters, static editor lessons, and seeded navigation with progressive
 
 **Next:** quiet saved progress and configurable unlocking.
 
-**Following:** richer motion families, typing refinements, terminal tasks, and
-programming integration. Menu placement and track selection remain independent of
+**Following:** richer motion families, typing refinements, richer terminal packs, and
+further programming refinements. Menu placement and track selection remain independent of
 unrelated prerequisites.
 One local learner uses the plugin; no account or profile management is planned.
 

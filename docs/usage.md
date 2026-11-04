@@ -11,9 +11,13 @@ Older versions have not been verified in this environment. Vim is not a supporte
 
 ### Versioning
 
-The plugin version is `0.1.0` (`require('practice').version`). Git tags are
-`v0.1.0`. Pin a tag for a freeze; follow `develop` for unreleased work.
-Content JSON uses a separate `schema_version` and is not the plugin release.
+The plugin version is `0.1.0` (`require('practice').version`). Releases use
+Semantic Versioning tags in the form `vMAJOR.MINOR.PATCH`. Pushing a `v*` tag
+creates a GitHub Release with automatically generated notes; the notes use
+merged pull requests and commits since the previous release. There is no
+manual changelog to maintain. Update the plugin version constant and install
+examples when preparing a release. Pin a tag or commit SHA for a freeze; follow
+`develop` for unreleased work. Content JSON uses a separate `schema_version`.
 
 ### lazy.nvim
 
@@ -84,7 +88,11 @@ Prosetta requires its CLI and language toolchains. The plugin does not install t
   editor lessons show the next teaching keys, then the full reference sequence.
 - `:PracticeNew`: generate another navigation board without requiring success.
 - `:PracticeProsetta`: select a programming exercise.
-- `:PracticeProblem`: read its statement; `q` dismisses the statement.
+- `:PracticeProblem`: read its `PROBLEM.md`; `q` returns to the draft.
+- `:PracticeSolution`: read the selected language's authored implementation.
+- `:PracticeExplanation`: read the concept's `README.md` explanation.
+- `:PracticeRun` / `:PracticeCheck`: evaluate the programming draft on public cases.
+- `:PracticeSubmit`: evaluate the programming draft on all cases.
 - `:PracticeTyping [file]`: type a file in native splits; without a file, show a file prompt.
 - `:PracticeTypingDemo`: open a bundled sample immediately.
 - `:PracticeFinish`: review the current typing attempt, including imperfect attempts.
@@ -92,6 +100,7 @@ Prosetta requires its CLI and language toolchains. The plugin does not install t
 Plugin actions use Normal-mode, buffer-local `<LocalLeader>` mappings backed by
 `<Plug>` targets. With the default backslash prefix: `\m` Menu, `\h` Hint,
 `\r` Retry, `\n` Next/Again, `\g` New board, `\c` Check, `\p` Problem, and `\f` Finish.
+Programming also maps `\v` View solution, `\e` Explanation, and `\s` Submit all.
 Only relevant actions are mapped. Set `vim.g.maplocalleader` before opening practice
 to use your own prefix. Existing mappings are preserved; if a shortcut is occupied,
 the helper displays its command instead. You can also define your own mapping:
@@ -277,8 +286,9 @@ toolchains (`go`, `python3`, `rustc`, `tsc`/`node`, `zig`). Check them with
 `prosetta probe`; the plugin does not ship WASM or reimplement probe.
 
 Activate a catalog with `prosetta catalog --url=…`, or point at an authoring
-`problems/` tree. The launcher lists `index.json` only. Opening a lesson reads
-`PROBLEM.md` and starters from disk. Lua does not unpack `{category}.tar.gz`.
+`problems/` tree. The launcher lists `index.json` only. Opening a lesson reads its
+starter, `PROBLEM.md`, optional `README.md`, and the selected language's authored
+`<language>/main.<extension>` from disk. Lua does not unpack `{category}.tar.gz`.
 
 ```lua
 require('practice').setup({
@@ -292,12 +302,28 @@ require('practice').setup({
 })
 ```
 
-The JSON host contract is `schema_version` `1` in polyglot-rosetta
-`docs/contract.md`. The adapter sends the buffer on stdin to
-`prosetta run --format=json` and adds `--all` when `fixture.submit` is true.
-It does not overwrite catalog solutions. Opening the launcher does not scan
-or probe the binary. Check waits for the CLI (synchronous snapshot). A missing
-CLI produces an installation message when an exercise starts.
+The native JSON contract uses `schema_version` `1`; see the core's `docs/cli.md`.
+Run sends the learner's buffer on stdin to `prosetta run --format=json`; Submit
+adds `--all`. Custom lessons can retain `fixture.submit = true` as their default.
+Submission mode is scoped to that action and never changes a subsequent Run.
+The plugin does not grade outputs, generate harnesses, build solutions itself,
+or overwrite catalog files: the native core handles compilation and evaluation.
+
+The default practice buffer stays editable. Reference views are separate read-only
+scratch buffers: `\p` shows the problem, `\v` shows the selected language's
+solution, and `\e` shows the authored explanation. `q` returns to the same draft,
+cursor, and undo history. Reference actions do not execute code or change progress;
+even explicit Run/Submit commands while viewing a reference read the practice
+buffer. Missing statements, explanations, and solutions have explicit placeholders.
+Reset closes reference views and restores the starter. Menu, Stop, setup, and
+session closure release owned views. Successful programming runs retain the draft;
+automatic repetition is reserved for repeatable editor/navigation drills.
+
+Opening the launcher does not read lesson bodies or probe the binary. A missing
+CLI produces an installation message when an exercise starts. The existing
+adapter still waits synchronously for the CLI during Run/Submit; this update does
+not introduce an asynchronous execution API. It needs no browser SDK, WASM assets,
+or compatible browser-host release.
 
 ## Verification
 
@@ -315,6 +341,10 @@ nvim --headless -u NONE -i NONE -n -l tests/organization.lua
 nvim --headless -u NONE -i NONE -n -l tests/layout.lua
 nvim --headless -u NONE -i NONE -n -l tests/keys.lua
 nvim --headless -u NONE -i NONE -n -l tests/typing.lua
+nvim --headless -u NONE -i NONE -n -l tests/terminal.lua
+nvim --headless -u NONE -i NONE -n -l tests/terminal_menu.lua
+nvim --headless -u NONE -i NONE -n -c 'lua dofile("tests/terminal_input.lua")'
+nvim --headless -u NONE -i NONE -n -l tests/prosetta_views.lua
 ```
 
 These cover schemas, extension/lifecycle behavior, twelve generated editor families,
@@ -330,3 +360,25 @@ PROSETTA_BIN=/absolute/path/to/prosetta \
 PROSETTA_ROOT=/absolute/path/to/polyglot-rosetta \
   nvim --headless -u NONE -i NONE -n -l tests/prosetta.lua
 ```
+
+## Terminal tasks
+
+Open **Terminal** from `:Practice`, or run `:PracticeTerminal`. Each lesson opens
+instructions above a real shell in a separate tab, with files populated in a private
+temporary directory. The shell opens ready for command input. Run commands to achieve the
+stated outcome, then press `<C-\><C-n>` to return to Normal mode and use
+`\c` / `:PracticeCheck`. The shell starts with your configured `shell` executable.
+The bundled tasks use ordinary POSIX tools (`mv`, `grep`, and `printf`).
+
+`\h` reveals progressive hints, `\r` discards the attempt and starts a fresh
+shell/workspace, `\n` rechecks before continuing, and `\m` returns to the menu.
+Commands remain available if a local mapping conflicts with your configuration.
+Passing keeps the terminal and result available for review. Closing the terminal
+window, Stop, Menu, or changing lessons terminates its shell and removes the
+workspace. Work inside it is disposable; save anything you want elsewhere first.
+The shell runs with your normal user permissions: the temporary directory is
+**not an OS sandbox**. Kubernetes clusters and containers are not provisioned.
+
+Tasks are ordinary catalog lessons with `tool = 'terminal'`; see the
+[terminal lesson format](content.md#terminal-lessons). New file-based tasks need
+only lesson data, with no new adapter or commands in the plugin.

@@ -9,7 +9,7 @@ persistence. Those features are not implemented yet.
 `:Practice` opens the configured menu. Use normal `j/k` movement, Enter to open,
 Backspace to return, and `q` or Escape to close. A menu can contain any number of
 entries and nested groups. The [default menu](../content/menu.json) contains four
-tracks; Terminal is marked as planned. Typing opens a file picker and native split
+tracks; Terminal opens the `builtin.terminal` lesson collection. Typing opens a file picker and native split
 workspace. Terminal IDE opens one flat list of navigation and other editor exercises. Navigation uses in-task hints rather than
 a level submenu; press `<LocalLeader>h` to reveal checkpoints, then the route, then hide them. Programming opens the optional Prosetta catalog.
 
@@ -173,3 +173,45 @@ Setup and the menu create no directories or files. This milestone establishes th
 boundaries; completion remains in memory and does not survive restarting Neovim.
 No account, profile, or generated user configuration is created. Durable versioned
 state, atomic writes, and coordination between Neovim processes are roadmap work.
+
+## Terminal lessons
+
+The shared terminal adapter populates a workspace, opens the real shell, and
+snapshots only paths requested by checks. Use the normal lesson metadata,
+instructions, and checks; the fixture has `files` (relative path → exact text),
+optional `directories` (array of relative paths), and optional `hints` (array of
+progressive teaching hints). Empty directories can be seeded explicitly.
+
+```lua
+{
+    id = 'my.shell-config', tool = 'terminal', category = 'shell',
+    title = 'Repair the port', instructions = { 'Set PORT=8080 in service.env.' },
+    fixture = {
+        files = { ['service.env'] = 'PORT=3000\n' },
+        hints = { 'Use an editor or printf with redirection.' },
+    },
+    checks = { {
+        path = { 'files', 'service.env', 'content' }, op = 'equals',
+        value = 'PORT=8080\n', message = 'Set the port to 8080.' },
+    },
+}
+```
+
+State paths are `{ 'files', '<relative path>', '<field>' }`. Fields are `exists`
+(boolean), `type` (`file`, `directory`, or `missing`), and `content` (exact bytes
+for regular files, including final newlines). All ordinary check operators work;
+use multiple checks to protect source files or require removal of originals.
+Checked text is limited to 1 MiB per file. Symlink paths are treated as missing
+and their targets are never read. Cleanup unlinks symlinks without traversing them.
+Paths must be relative, with no empty, dot, parent, backslash, or colon components.
+Files cannot double as directories. Validation runs before replacing a session.
+Fixtures and checks contain data only: there are no lesson setup scripts, shell
+commands, or executable validation hooks. Solutions can use any commands that
+produce the requested result; command history is not graded.
+
+The bundled collection is `builtin.terminal`. Custom terminal lessons work through
+`lessons`, module packs, or file packs, and can be placed in any menu collection.
+Disposable terminal fixtures use Neovim's system temporary directory, independently
+of the reserved durable storage roots above. Additional tool-specific outcomes
+(such as live Kubernetes resources) require a trusted adapter extension; they are
+not part of the initial filesystem snapshot contract.

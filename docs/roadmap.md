@@ -1,6 +1,6 @@
 # Vision and development roadmap
 
-Last reviewed: 2026-10-30. This is the persistent context for continuing the project.
+Last reviewed: 2026-11-02. This is the persistent context for continuing the project.
 Use the [README](../README.md) for orientation, [usage guide](usage.md) for shipped
 behavior, and [adapter contract](adapters.md) for the prototype API. Plans below are
 not configuration options until implemented.
@@ -178,6 +178,10 @@ an unused portability framework.
   Normal-mode boundaries, seeded editing generators for the twelve bundled drills,
   and reference-sequence next-move hints.
 
+- [x] Practice-first programming sessions, separate read-only authored solution,
+  problem and explanation views, public/all-case native CLI actions, retained
+  drafts after reference viewing and successful runs, and five-language integration tests.
+
 Current gaps: progress dies with the process. Setup preserves completion but resets
 attempts. Hints are available on demand and are independent of progression; do not
 turn them into locked levels. Generated shortest routes use only j/l from the
@@ -320,3 +324,37 @@ At the end of a work session, update status, unresolved decisions, the next task
 and actual verification here. Keep public usage accurate, and distinguish current
 configuration from proposed schema. This document replaces the need to reconstruct
 project intent from chat history.
+
+Terminal checkpoint, 2026-11-02: the Terminal track now uses a shared adapter and
+normal catalog lessons. Three bundled filesystem missions cover moving deployment
+files, extracting log errors, and repairing configuration. Each opens a real shell
+with a disposable fixture; checks assess filesystem outcomes, not command history.
+Hints, retry, check, next, and completion reuse the existing engine. Passing retains
+the result. Retry replaces the shell/workspace; Stop/Menu/window close clean up.
+Relative paths, file/directory collisions, bounded reads, symlink handling, and root
+ownership checks are implemented. This is a real user shell, not an OS sandbox;
+live Kubernetes/DevOps infrastructure and command validators remain future work.
+Progress remains in memory; resume milestone 3 for saved progress. Add ordinary
+filesystem missions through lesson data rather than branching core logic by ID.
+
+Verification: `tests/terminal.lua` executes real shell solutions for all three
+bundled tasks and a custom data-only lesson; checks initial failures, successful
+outcomes, hint/retry, no auto-repeat, validation preserving an active session,
+manual-close cleanup, root replacement, and symlink boundaries. All four plain Lua
+suites and Neovim run/navigation/catalog/organization/layout/keys/typing/
+typing_sources/prosetta_views suites passed. Source/index parity and `git diff
+--check` passed. The external real Prosetta runner suite was not run; its tools
+are not installed. These checks use the installed Neovim, not a 0.9 version matrix.
+
+Terminal launcher follow-up: the default menu now references `builtin.terminal`
+directly. `tests/terminal_menu.lua` verifies the landing entry opens its collection
+and launches a real terminal task. That regression, organization, and keys suites
+passed. Existing Neovim sessions need restarting to load changed Lua modules.
+
+Terminal interaction follow-up: Start/Retry now focus the shell and enter terminal
+input automatically. Task and Shell status lines distinguish the instructions
+from the terminal, whose editing gutters are hidden. `tests/terminal_input.lua`
+uses the Neovim input loop to verify terminal mode, types a real command, checks
+its filesystem outcome, and verifies retry restores terminal input. This test
+and the landing-menu regression passed. More realistic tool/workflow lessons
+remain content work; the current pack is three foundational filesystem tasks.

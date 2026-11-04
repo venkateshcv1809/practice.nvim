@@ -51,7 +51,7 @@ local M = {}
 function M.validate(lesson, options) end -- optional; raise on invalid tool-specific data
 function M.open(lesson, context) end    -- return a non-nil session handle
 function M.reset(handle, lesson) end   -- restore starting fixture
-function M.snapshot(handle, lesson) end -- return plain state for validation
+function M.snapshot(handle, lesson, options) end -- return plain state; options are action-local
 function M.render(handle, lesson, message) end
 function M.close(handle) end
 return M
@@ -63,8 +63,8 @@ Validation occurs before replacing an existing session. A session runs
 open → reset → render; checking runs snapshot → checks → render. Passing records
 completion. Reset clears the active pass state but retains history. Next rechecks
 before moving on. Navigation and editor lessons repeat the same concept with a
-new seed; other tools walk the catalog. Passing schedules a short auto-advance
-that reset, stop, menu, and setup cancel.
+new seed; other tools walk the catalog. Passing a repeatable editor/navigation drill schedules a short auto-advance
+that reset, stop, menu, and setup cancel. Programming passes retain the current draft.
 
 On open failure, release resources before raising. The engine closes returned
 handles when reset/render fails; close must tolerate resources already removed
@@ -81,7 +81,9 @@ Prosetta adapter currently waits for `prosetta run` with `jobwait`, which blocks
 the UI until evaluation finishes. Avoid blocking the event loop in new integrations. Command execution belongs in trusted adapter
 code, not lesson fields. A fixture is not an OS sandbox: use disposable environments
 for shell/Git tasks. Check external prerequisites and report useful errors; do not
-install tools automatically. Bundled adapters are editor, navigation, and Prosetta.
+install tools automatically. Bundled adapters are editor, navigation, terminal, and Prosetta.
+The terminal adapter reuses this lifecycle for a native shell tab; its
+[fixture and snapshot contract](content.md#terminal-lessons) is lesson-controlled.
 
 ## Reusing the core
 
@@ -112,3 +114,23 @@ This workflow is selected by a registered menu action rather than manufacturing 
 catalog tutorial ID for every chosen file. The facade ensures one active activity.
 A shared activity lifecycle can be extracted when another native workspace game
 needs it; floating game adapters keep their current engine contract.
+
+## Programming reference content
+
+Prosetta fixtures can include optional string fields `problem`, `explanation`,
+and `solution`. The native catalog provider fills them from `PROBLEM.md`,
+`README.md`, and the selected language's `main.<extension>` only when loading
+that lesson. Metadata-only listing does not read these bodies. No reference
+field is evaluated by the lesson validator.
+
+`Engine:evaluate(options)` and `Engine:check(options)` copy action-local options
+to the adapter's optional third snapshot argument. Prosetta's `{ all = true }`
+selects all cases for Submit without changing the lesson fixture or later Run.
+Other adapters ignore this optional argument. `fixture.submit` remains supported
+for custom lessons whose default check already includes hidden cases.
+
+The Neovim facade owns document actions, and `practice.prosetta.view` owns their
+read-only scratch windows. The Prosetta adapter closes those views with the
+session. View transitions leave the editable practice buffer, cursor, undo state,
+and progress untouched. `practice.status().view` reports `practice`, `problem`,
+`solution`, or `explanation` for the active programming session.
