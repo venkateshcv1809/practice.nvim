@@ -12,7 +12,7 @@
       "id": "terminal",
       "title": "Terminal",
       "order": 20,
-      "action": "terminal.start"
+      "collection": "builtin.terminal"
     },
     {
       "id": "ide",

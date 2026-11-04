@@ -25,6 +25,7 @@ vim.api.nvim_create_user_command('PracticeTyping', function(args)
 end, { nargs = '?', complete = 'file', desc = 'Type a reference file in native splits' })
 for command, method in pairs({ PracticeCheck = 'check', PracticeReset = 'reset',
     PracticeTypingDemo = 'typing_demo', PracticeFinish = 'finish', PracticeMenu = 'home', PracticeHint = 'hint', PracticeNext = 'next', PracticeContinue = 'start', PracticeCatalogRefresh = 'refresh', PracticeStop = 'stop', PracticeList = 'list',
-    PracticeProsetta = 'prosetta_list', PracticeProblem = 'problem', PracticeNew = 'new' }) do
+    PracticeTerminal = 'terminal_list', PracticeProsetta = 'prosetta_list', PracticeProblem = 'problem', PracticeSolution = 'solution',
+    PracticeExplanation = 'explanation', PracticeRun = 'run', PracticeSubmit = 'submit', PracticeNew = 'new' }) do
     vim.api.nvim_create_user_command(command, function() require('practice')[method]() end, {})
 end

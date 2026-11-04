@@ -76,7 +76,7 @@ expect(not validator.check(loader.get('builtin.macro-prefix'), {
 }), 'empty macro accepted')
 local selected = false
 vim.ui.select = function(items, opts, callback)
-    expect(#items == 13 and opts.format_item(items[1]):find('[done]', 1, true), 'picker missing progress')
+    expect(#items == 16 and opts.format_item(items[1]):find('[done]', 1, true), 'picker missing progress')
     selected = true
     callback(items[1])
 end
@@ -116,7 +116,7 @@ local custom = {
     checks = { { path = { 'lines' }, op = 'equals', value = { 'keep' }, message = 'Keep only the second line.' } },
 }
 practice.setup({ lessons = { custom } })
-expect(#practice.lessons() == 14, 'custom lesson not appended')
+expect(#practice.lessons() == 17, 'custom lesson not appended')
 expect(vim.deep_equal(vim.fn.getcompletion('Practice custom-', 'cmdline'), { 'custom-delete' }), 'custom completion missing')
 vim.cmd('Practice custom-delete')
 expect(not practice.check(), 'custom unsolved lesson passed')

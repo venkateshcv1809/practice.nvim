@@ -1,0 +1,41 @@
+{
+  "id": "builtin.terminal-logs",
+  "title": "Extract deployment errors",
+  "tool": "terminal",
+  "category": "shell",
+  "instructions": [
+    "Extract only the ERROR lines from logs/deploy.log into errors.txt.",
+    "Keep the original log unchanged."
+  ],
+  "fixture": {
+    "files": {
+      "logs/deploy.log": "INFO starting deployment\nERROR image pull failed\nINFO retrying\nERROR readiness probe failed\n"
+    },
+    "hints": [
+      "Use grep to select matching lines and > to save the output.",
+      "Try: grep ERROR logs/deploy.log > errors.txt"
+    ]
+  },
+  "checks": [
+    {
+      "path": [
+        "files",
+        "errors.txt",
+        "content"
+      ],
+      "op": "equals",
+      "value": "ERROR image pull failed\nERROR readiness probe failed\n",
+      "message": "errors.txt must contain the two ERROR lines in their original order."
+    },
+    {
+      "path": [
+        "files",
+        "logs/deploy.log",
+        "content"
+      ],
+      "op": "equals",
+      "value": "INFO starting deployment\nERROR image pull failed\nINFO retrying\nERROR readiness probe failed\n",
+      "message": "Keep the source log unchanged."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "builtin.terminal-organize",
+  "title": "Organize a deployment workspace",
+  "tool": "terminal",
+  "category": "shell",
+  "instructions": [
+    "Move incoming/service.conf into release/service.conf.",
+    "Keep incoming/notes.txt unchanged."
+  ],
+  "fixture": {
+    "files": {
+      "incoming/service.conf": "port=8080\n",
+      "incoming/notes.txt": "Review the deployment before release.\n"
+    },
+    "hints": [
+      "Use ls to inspect the workspace, then mv to move the configuration.",
+      "Try: mv incoming/service.conf release/"
+    ],
+    "directories": [
+      "release"
+    ]
+  },
+  "checks": [
+    {
+      "path": [
+        "files",
+        "release/service.conf",
+        "content"
+      ],
+      "op": "equals",
+      "value": "port=8080\n",
+      "message": "Preserve the configuration in release/service.conf."
+    },
+    {
+      "path": [
+        "files",
+        "incoming/service.conf",
+        "exists"
+      ],
+      "op": "equals",
+      "value": false,
+      "message": "Remove the original incoming/service.conf after moving it."
+    },
+    {
+      "path": [
+        "files",
+        "incoming/notes.txt",
+        "content"
+      ],
+      "op": "equals",
+      "value": "Review the deployment before release.\n",
+      "message": "Keep the notes unchanged."
+    }
+  ]
+}

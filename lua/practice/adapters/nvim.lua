@@ -96,7 +96,7 @@ function M.open(lesson, context)
         vim.api.nvim_create_autocmd('BufWipeout', { group = handle.group, buffer = handle.buffer, callback = cleanup })
         local names = { 'hint', 'check', 'reset', 'next', 'menu' }
         if lesson.tool == 'navigation' then names = { 'hint', 'reset', 'new', 'next', 'menu' }
-        elseif lesson.tool == 'prosetta' then names = { 'check', 'reset', 'next', 'problem', 'menu' } end
+        elseif lesson.tool == 'prosetta' then names = { 'check', 'submit', 'reset', 'next', 'problem', 'solution', 'explanation', 'menu' } end
         handle.bindings = require('practice.ui.keys').install(handle.buffer, names, context.actions)
         if lesson.tool == 'nvim' then
             vim.api.nvim_create_autocmd({ 'CursorMoved', 'TextChanged', 'InsertLeave' }, {

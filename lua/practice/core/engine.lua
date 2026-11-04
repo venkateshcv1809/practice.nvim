@@ -119,20 +119,20 @@ function Engine:start(id)
     self.session = active
     return self:reset()
 end
-function Engine:evaluate()
+function Engine:evaluate(options)
     if not self.session then return false, 'No active practice session.' end
     local active = self.session
-    local ok, state = pcall(active.adapter.snapshot, active.handle, data.copy(active.lesson))
+    local ok, state = pcall(active.adapter.snapshot, active.handle, data.copy(active.lesson), data.copy(options))
     if not ok then return false, tostring(state) end
     if type(state) ~= 'table' or not data.plain(state) then
         return false, 'Adapter snapshot() must return plain state data.'
     end
     return validator.check(active.lesson, state)
 end
-function Engine:check()
+function Engine:check(options)
     if not self.session then return false, 'No active practice session.' end
     local active = self.session
-    local passed, message = self:evaluate()
+    local passed, message = self:evaluate(options)
     local rendered, err = pcall(self.render, self, message)
     if not rendered then self:stop(); return false, tostring(err) end
     active.passed = passed

@@ -1,0 +1,12 @@
+{
+  "id": "builtin.terminal-config",
+  "title": "Repair a service configuration",
+  "tool": "terminal",
+  "category": "shell",
+  "revision": 1,
+  "tags": [
+    "terminal",
+    "shell"
+  ],
+  "resource": "tutorials/terminal-config/lesson.json"
+}

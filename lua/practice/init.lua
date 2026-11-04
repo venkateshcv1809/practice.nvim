@@ -7,7 +7,6 @@ local engine
 local menu
 local paths
 local configured
-local problem_window
 local typing_session
 local revision = 0
 local advance_token = 0
@@ -15,10 +14,10 @@ local function notify(message, level)
     if message then vim.notify(message, level or vim.log.levels.INFO, { title = 'nvim-practice' }) end
 end
 local function close_problem()
-    if problem_window and vim.api.nvim_win_is_valid(problem_window) then
-        vim.api.nvim_win_close(problem_window, true)
+    local active = engine and engine.session
+    if active and active.lesson.tool == 'prosetta' then
+        require('practice.prosetta.view').close(active.handle)
     end
-    problem_window = nil
 end
 local function close_typing()
     local previous = typing_session
@@ -37,7 +36,7 @@ local function create(config)
     local locations = require('practice.storage.paths').resolve(config.storage)
     local actions = {
         ['typing.start'] = { run = function() M.typing() end },
-        ['terminal.start'] = { unavailable = 'Terminal practice is planned.' },
+        ['terminal.start'] = { run = function() M.terminal_list() end },
     }
     for id, run in pairs(config.actions) do actions[id] = { run = run } end
     local tree = config.menu
@@ -52,10 +51,11 @@ local function create(config)
     end
     local model = require('practice.menus.model').new(tree, catalog, actions)
     local adapters = vim.tbl_extend('force', { nvim = 'practice.adapters.nvim',
-        navigation = 'practice.adapters.navigation', prosetta = 'practice.adapters.prosetta' }, config.adapters)
+        navigation = 'practice.adapters.navigation', terminal = 'practice.adapters.terminal', prosetta = 'practice.adapters.prosetta' }, config.adapters)
     local replacement = Engine.new({ catalog = catalog, adapters = adapters, options = config,
         actions = { check = M.check, reset = M.reset, next = M.next, stop = M.stop,
-            problem = M.problem, new = M.new, hint = M.hint, menu = M.home, evaluate = M.evaluate } })
+            problem = M.problem, solution = M.solution, explanation = M.explanation, submit = M.submit,
+            new = M.new, hint = M.hint, menu = M.home, evaluate = M.evaluate } })
     local controller = require('practice.menus.controller').new(model, config, M.start,
         function(message) notify(message, vim.log.levels.WARN) end)
     return replacement, controller, locations, config
@@ -185,16 +185,16 @@ function M.evaluate()
     if typing_session then return false, 'No exercise session is active.' end
     return current():evaluate()
 end
-function M.check()
+function M.check(options)
     if typing_session then
         local ok, result = M.finish()
         if not ok then return false, result end
         return result.matched, result.matched and 'Typing complete!' or ('Remaining errors: ' .. result.errors)
     end
     local was_passed = current():status().passed
-    local ok, message = current():check()
+    local ok, message = current():check(options)
     if ok then
-        if not was_passed then schedule_advance() end
+        if not was_passed and current():repeatable() then schedule_advance() end
     else
         notify(message, vim.log.levels.WARN)
     end
@@ -247,6 +247,11 @@ local function select_lessons(tool)
     }, function(lesson) if lesson then M.start(lesson.id) end end)
 end
 function M.list() select_lessons() end
+function M.terminal_list()
+    current()
+    if not engine.catalog:has_collection('builtin.terminal') then return select_lessons('terminal') end
+    return menu:open({ id = 'terminal', title = 'Terminal', collection = 'builtin.terminal' })
+end
 function M.prosetta_list()
     current()
     if not engine.catalog:has_collection('prosetta.programming') then
@@ -254,32 +259,27 @@ function M.prosetta_list()
     end
     return menu:open({ id = 'programming', title = 'Programming', collection = 'prosetta.programming' })
 end
-function M.problem()
-    local active = current()
-    local status = active:status()
-    local lesson = status.lesson and active:get(status.lesson)
-    if not lesson or lesson.tool ~= 'prosetta' then
+local function show_document(kind)
+    local active = current().session
+    if not active or active.lesson.tool ~= 'prosetta' then
         notify('No Prosetta exercise is active.', vim.log.levels.WARN)
         return false
     end
-    close_problem()
-    local lines = vim.split(lesson.fixture.problem, '\n', { plain = true })
-    local buffer = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
-    vim.bo[buffer].bufhidden = 'wipe'
-    vim.bo[buffer].swapfile = false
-    vim.bo[buffer].filetype = 'markdown'
-    vim.bo[buffer].modifiable = false
-    local width = math.min(100, vim.o.columns - 4)
-    local height = math.min(math.max(#lines, 4), vim.o.lines - 6)
-    problem_window = vim.api.nvim_open_win(buffer, true, {
-        relative = 'editor', width = width, height = height,
-        row = math.floor((vim.o.lines - height) / 2), col = math.floor((vim.o.columns - width) / 2),
-        style = 'minimal', border = 'rounded', title = lesson.title, zindex = 60,
-    })
-    vim.wo[problem_window].wrap = true
-    vim.keymap.set('n', 'q', close_problem, { buffer = buffer, silent = true })
+    local ok, result = pcall(require('practice.prosetta.view').open, active.handle, active.lesson, kind)
+    if not ok then notify(tostring(result), vim.log.levels.ERROR); return false, tostring(result) end
     return true
+end
+function M.problem() return show_document('problem') end
+function M.solution() return show_document('solution') end
+function M.explanation() return show_document('explanation') end
+function M.run() return M.check() end
+function M.submit()
+    local active = current().session
+    if not active or active.lesson.tool ~= 'prosetta' then
+        notify('No Prosetta exercise is active.', vim.log.levels.WARN)
+        return false
+    end
+    return M.check({ all = true })
 end
 function M.typing(path)
     current()
@@ -337,6 +337,9 @@ end
 function M.lessons() return current():list() end
 function M.status()
     local status = current():status()
+    if status.tool == 'prosetta' then
+        status.view = require('practice.prosetta.view').current(current().session.handle)
+    end
     if typing_session then
         status.tool, status.lesson = 'typing', nil
         status.source = typing_session.source.path

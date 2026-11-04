@@ -1,4 +1,4 @@
--- Prosetta adapter: native CLI client only (docs/contract.md in polyglot-rosetta).
+-- Prosetta adapter: native CLI client only (docs/cli.md in polyglot-rosetta).
 -- Evaluation is `prosetta run --format=json`. Language tools are PATH binaries
 -- (`prosetta probe`); this plugin does not load WASM or unpack catalog tars.
 local editor = require('practice.adapters.nvim')
@@ -11,7 +11,7 @@ function M.validate(lesson, options)
     local fixture = lesson.fixture
     for key in pairs(fixture) do
         assert(key == 'lines' or key == 'cursor' or key == 'id' or key == 'language'
-            or key == 'submit' or key == 'problem', 'unknown prosetta fixture field: ' .. tostring(key))
+            or key == 'submit' or key == 'problem' or key == 'solution' or key == 'explanation', 'unknown prosetta fixture field: ' .. tostring(key))
     end
     assert(data.array(fixture.lines) and #fixture.lines > 0,
         'prosetta fixture.lines must be a nonempty array')
@@ -25,8 +25,10 @@ function M.validate(lesson, options)
     end
     assert(fixture.submit == nil or type(fixture.submit) == 'boolean',
         'prosetta fixture.submit must be a boolean')
-    assert(fixture.problem == nil or type(fixture.problem) == 'string',
-        'prosetta fixture.problem must be a string')
+    for _, key in ipairs({ 'problem', 'solution', 'explanation' }) do
+        assert(fixture[key] == nil or type(fixture[key]) == 'string',
+            'prosetta fixture.' .. key .. ' must be a string')
+    end
     for _, check in ipairs(lesson.checks) do
         assert(check.path[1] == 'exit_code' or check.path[1] == 'output'
             or check.path[1] == 'result',
@@ -36,6 +38,7 @@ end
 
 function M.open(lesson, context)
     local handle = editor.open(lesson, context)
+    handle.prosetta_actions = context.actions
     handle.prosetta_command = context.options.prosetta_command
     handle.prosetta_catalog = context.options.prosetta_catalog
     handle.prosetta_cwd = context.options.prosetta_cwd
@@ -43,15 +46,16 @@ function M.open(lesson, context)
 end
 
 function M.reset(handle, lesson)
+    require('practice.prosetta.view').close(handle)
     editor.reset(handle, lesson)
     vim.bo[handle.buffer].filetype = lesson.fixture.language
 end
 
-function M.snapshot(handle, lesson)
+function M.snapshot(handle, lesson, options)
     local source = table.concat(vim.api.nvim_buf_get_lines(handle.buffer, 0, -1, false), '\n') .. '\n'
     local args = { handle.prosetta_command, 'run', '--format=json',
         '--id=' .. lesson.fixture.id, '--lang=' .. lesson.fixture.language, '--stdin' }
-    if lesson.fixture.submit then table.insert(args, 3, '--all') end
+    if lesson.fixture.submit or (options and options.all) then table.insert(args, 3, '--all') end
     local stdout, stderr = {}, {}
     local env = {}
     if handle.prosetta_catalog then env.PROSETTA_CATALOG = handle.prosetta_catalog end
@@ -91,6 +95,9 @@ function M.snapshot(handle, lesson)
 end
 
 M.render = editor.render
-M.close = editor.close
+function M.close(handle)
+    require('practice.prosetta.view').close(handle)
+    editor.close(handle)
+end
 
 return M

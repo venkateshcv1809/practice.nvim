@@ -1,0 +1,12 @@
+{
+  "id": "builtin.terminal-organize",
+  "title": "Organize a deployment workspace",
+  "tool": "terminal",
+  "category": "shell",
+  "revision": 1,
+  "tags": [
+    "terminal",
+    "shell"
+  ],
+  "resource": "tutorials/terminal-organize/lesson.json"
+}

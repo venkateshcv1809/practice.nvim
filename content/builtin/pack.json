@@ -53,6 +53,18 @@
     {
       "path": "tutorials/navigation/info.json",
       "order": 13
+    },
+    {
+      "path": "tutorials/terminal-organize/info.json",
+      "order": 14
+    },
+    {
+      "path": "tutorials/terminal-logs/info.json",
+      "order": 15
+    },
+    {
+      "path": "tutorials/terminal-config/info.json",
+      "order": 16
     }
   ],
   "collections": [
@@ -171,6 +183,24 @@
         {
           "id": "builtin.macro-prefix",
           "order": 130
+        }
+      ]
+    },
+    {
+      "id": "builtin.terminal",
+      "title": "Terminal tasks",
+      "items": [
+        {
+          "id": "builtin.terminal-organize",
+          "order": 14
+        },
+        {
+          "id": "builtin.terminal-logs",
+          "order": 15
+        },
+        {
+          "id": "builtin.terminal-config",
+          "order": 16
         }
       ]
     }

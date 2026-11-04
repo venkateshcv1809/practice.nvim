@@ -106,7 +106,9 @@ function M.provider(options)
                         tool = 'prosetta', category = 'coding', revision = 1, tags = { 'coding', language.name },
                         description = concept.description or '', order = #pending + 1 }
                     lookup[id] = { concept = concept, language = language.name, starter = starter,
-                        problem = join(base, 'PROBLEM.md'), concept_id = ref.id, entry = pending[#pending] }
+                        problem = join(base, 'PROBLEM.md'), explanation = join(base, 'README.md'),
+                        solution = join(base, language.name, 'main.' .. language.extension),
+                        concept_id = ref.id, entry = pending[#pending] }
                 end
             end
         end
@@ -143,7 +145,8 @@ function M.provider(options)
             return { id = id, title = source.entry.title, tool = 'prosetta', category = 'coding',
                 instructions = { source.concept.path, source.concept.description or '' },
                 fixture = { id = source.concept_id, language = source.language,
-                    problem = read(source.problem) or source.concept.description or '',
+                    problem = read(source.problem) or '',
+                    solution = read(source.solution), explanation = read(source.explanation),
                     lines = lines, cursor = starting_cursor(lines) },
                 checks = { { path = { 'result', 'status' }, op = 'equals', value = 'passed',
                     message = 'The solution did not pass the selected Prosetta test cases.' } },

@@ -19,6 +19,9 @@ local definitions = {
     new = { key = 'g', command = 'PracticeNew', label = 'New board' },
     hint = { key = 'h', command = 'PracticeHint', label = 'Hint' },
     problem = { key = 'p', command = 'PracticeProblem', label = 'Problem' },
+    solution = { key = 'v', command = 'PracticeSolution', label = 'View solution' },
+    explanation = { key = 'e', command = 'PracticeExplanation', label = 'Explanation' },
+    submit = { key = 's', command = 'PracticeSubmit', label = 'Submit all' },
     finish = { key = 'f', command = 'PracticeFinish', label = 'Finish' },
 }
 local function prefix()

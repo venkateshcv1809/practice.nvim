@@ -1,0 +1,31 @@
+{
+  "id": "builtin.terminal-config",
+  "title": "Repair a service configuration",
+  "tool": "terminal",
+  "category": "shell",
+  "instructions": [
+    "Update config/service.env to use PORT=8080 and MODE=production.",
+    "Keep exactly these two lines, in that order, with a final newline."
+  ],
+  "fixture": {
+    "files": {
+      "config/service.env": "PORT=3000\nMODE=development\n"
+    },
+    "hints": [
+      "Use an editor, sed, or printf with redirection to update the file.",
+      "Try: printf 'PORT=8080\\nMODE=production\\n' > config/service.env"
+    ]
+  },
+  "checks": [
+    {
+      "path": [
+        "files",
+        "config/service.env",
+        "content"
+      ],
+      "op": "equals",
+      "value": "PORT=8080\nMODE=production\n",
+      "message": "Set PORT=8080 and MODE=production in config/service.env."
+    }
+  ]
+}

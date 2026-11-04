@@ -5,8 +5,8 @@ local namespace = vim.api.nvim_create_namespace('practice.chrome')
 local function controls(lesson, bindings)
     local names = { 'hint', 'check', 'reset', 'next', 'menu' }
     if lesson.tool == 'navigation' then names = { 'hint', 'reset', 'new', 'next', 'menu' }
-    elseif lesson.tool == 'prosetta' then names = { 'check', 'reset', 'next', 'problem', 'menu' } end
-    local labels = (lesson.tool == 'navigation' or lesson.tool == 'nvim') and { next = 'Again' } or nil
+    elseif lesson.tool == 'prosetta' then names = { 'check', 'submit', 'reset', 'next', 'problem', 'solution', 'explanation', 'menu' } end
+    local labels = (lesson.tool == 'navigation' or lesson.tool == 'nvim') and { next = 'Again' } or (lesson.tool == 'prosetta' and { check = 'Run' } or nil)
     return require('practice.ui.keys').controls(names, bindings, labels)
 end
 local function control_lines(lesson, width, bindings)
